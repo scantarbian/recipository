@@ -141,7 +141,7 @@ export default function App () {
     <div className="">
       <header className="flex flex-col w-full items-center my-20">
         <h1 className="text-white font-bold text-5xl ">👋 Welcome to Recipository! 🍽</h1>
-        <span className="pt-4 text-xl text-gray-200 font-light">Here you can share your homemade recipe and store them in the blockchain!</span>
+        <span className="pt-4 text-xl text-gray-200 font-light">Here you can share your homemade recipes and store them in the blockchain!</span>
       </header>
       <main className="flex flex-col items-center w-full ">
         <form 
