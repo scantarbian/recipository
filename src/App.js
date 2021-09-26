@@ -1,5 +1,5 @@
 import reciportal from './utils/Reciportal.json';
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ethers } from "ethers";
 import { useForm } from "react-hook-form";
 
@@ -55,7 +55,7 @@ export default function App () {
     }
   }
 
-  const checkWalletConnection = async () => {
+  const checkWalletConnection = useCallback(async () => {
     try {
       const { ethereum } = window;
 
@@ -79,7 +79,7 @@ export default function App () {
     } catch (error) {
       console.error(error);
     }
-  }
+  }, []);
 
   const connectWallet = async () => {
     try {
@@ -176,15 +176,17 @@ export default function App () {
                 Connect Wallet
               </button>
             )}
-            <button 
-              type="submit"
-              className="p-4 rounded-2xl bg-white font-light
-              transform-gpu transition duration-500
-              hover:bg-gray-100 hover:scale-110
-              focus:scale-100 focus:bg-gray-100"
-            >
-              Submit Recipe
-            </button>
+            {currentAccount && (
+              <button 
+                type="submit"
+                className="p-4 rounded-2xl bg-white font-light
+                transform-gpu transition duration-500
+                hover:bg-gray-100 hover:scale-110
+                focus:scale-100 focus:bg-gray-100"
+              >
+                Submit Recipe
+              </button>
+            )}
           </div>
         </form>
           {allRecipes.length > 0 && (
