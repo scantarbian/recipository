@@ -35,7 +35,7 @@ export default function App () {
         setAllRecipes(purifiedRecipes);
 
         reciportalContract.on("NewRecipe", (from, timestamp, title, ingredients, instructions) => {
-          console.log("NewRecipe", from, timestamp, title, ingredients, instructions);
+          // console.log("NewRecipe", from, timestamp, title, ingredients, instructions);
 
           setAllRecipes(prevState => [
             ...prevState, {
@@ -48,7 +48,7 @@ export default function App () {
           ]);
         });
       } else {
-        console.log("No ethereum object found!");
+        console.error("No ethereum object found!");
       }
     } catch (error) {
       console.error(error);
@@ -63,18 +63,18 @@ export default function App () {
         alert("Please connect to MetaMask");
         return;
       } else {
-        console.log("We have the ethereum object: ", ethereum);
+        // console.log("We have the ethereum object: ", ethereum);
       }
   
       const accounts  = await ethereum.request({ method: "eth_accounts"});
   
       if (accounts.length !== 0) {
         const account = accounts[0];
-        console.log("Found an authorized account: ", account);
+        // console.log("Found an authorized account: ", account);
         setCurrentAccount(account);
         getAllRecipes();
       } else {
-        console.log("No authorized account found!");
+        console.error("No authorized account found!");
       }
     } catch (error) {
       console.error(error);
@@ -92,7 +92,7 @@ export default function App () {
 
       const accounts = await ethereum.request({ method: "eth_requestAccounts"});
       
-      console.log("Connected: ", accounts[0]);
+      // console.log("Connected: ", accounts[0]);
       setCurrentAccount(accounts[0]);
     } catch (error) {
       console.error(error);
@@ -109,7 +109,7 @@ export default function App () {
         const reciportalContract = new ethers.Contract(contractAddress, reciportal.abi, signer);
 
         // let count = await reciportalContract.getTotalRecipes();
-        // console.log("Total Waves: ", count.toNumber());
+        // console.log("Total Recipes: ", count.toNumber());
 
         const waveTxn = await reciportalContract.recipost(title, ingredients, instructions, { gasLimit: 300000 });
         console.log("Mining...", waveTxn.hash);
@@ -118,7 +118,7 @@ export default function App () {
         console.log("Mined!", waveTxn.hash);
 
       } else {
-        console.log("No ethereum object found!");
+        console.error("No ethereum object found!");
       }
     } catch (error) {
       console.error(error);
