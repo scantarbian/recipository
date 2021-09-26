@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-gradient-to-br from-pink-400 to-purple-400 h-screen m-0 bg-no-repeat bg-cover bg-fixed;
+}
