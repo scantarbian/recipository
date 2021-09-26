@@ -7,7 +7,7 @@ export default function App () {
   const [currentAccount, setCurrentAccount] = useState("");
   const [allRecipes, setAllRecipes] = useState([]);
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const contractAddress = "0x1BCcF95c826807a33dA070047a47Ad9A712a44f5";
 
@@ -135,7 +135,7 @@ export default function App () {
 
   useEffect(() => {
     checkWalletConnection();
-  }, []);
+  }, [checkWalletConnection]);
 
   return (
     <div className="">
@@ -209,7 +209,7 @@ export default function App () {
           )}
       </main>
       <footer className="mt-20 w-full p-4 text-white text-center">
-        <span>Made with ❤ by <a target="_blank" href="https://github.com/scantarbian/">scantarbian</a></span>
+        <span>Made with ❤ by <a target="_blank" rel="noreferrer" href="https://github.com/scantarbian/">scantarbian</a></span>
       </footer>
     </div>
   );
