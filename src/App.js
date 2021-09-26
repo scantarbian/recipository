@@ -9,7 +9,7 @@ export default function App () {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const contractAddress = "0x2A3579132dB71Aa62a4f91Ad1cb452268B0A2169";
+  const contractAddress = "0x1BCcF95c826807a33dA070047a47Ad9A712a44f5";
 
   const getAllRecipes = async () => {
     try {
@@ -25,7 +25,6 @@ export default function App () {
         recipes.forEach((recipe) => {
           purifiedRecipes.push({
             address: recipe.sender,
-            // grab date and time
             timestamp: new Date(recipe.timestamp.toNumber() * 1000).toLocaleString(),
             title: recipe.title,
             ingredients: recipe.ingredients,
@@ -34,6 +33,20 @@ export default function App () {
         });
         
         setAllRecipes(purifiedRecipes);
+
+        reciportalContract.on("NewRecipe", (from, timestamp, title, ingredients, instructions) => {
+          console.log("NewRecipe", from, timestamp, title, ingredients, instructions);
+
+          setAllRecipes(prevState => [
+            ...prevState, {
+              address: from,
+              timestamp: new Date(timestamp.toNumber() * 1000).toLocaleString(),
+              title: title,
+              ingredients: ingredients,
+              instructions: instructions,
+            }
+          ]);
+        });
       } else {
         console.log("No ethereum object found!");
       }
@@ -98,7 +111,7 @@ export default function App () {
         // let count = await reciportalContract.getTotalRecipes();
         // console.log("Total Waves: ", count.toNumber());
 
-        const waveTxn = await reciportalContract.recipost(title, ingredients, instructions);
+        const waveTxn = await reciportalContract.recipost(title, ingredients, instructions, { gasLimit: 300000 });
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
@@ -195,7 +208,7 @@ export default function App () {
             </div>
           )}
       </main>
-      <footer className="mt-20 w-full p-4 text-white text-center bg-black">
+      <footer className="mt-20 w-full p-4 text-white text-center">
         <span>Made with ❤ by <a target="_blank" href="https://github.com/scantarbian/">scantarbian</a></span>
       </footer>
     </div>
